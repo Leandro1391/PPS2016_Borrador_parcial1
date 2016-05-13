@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 var myDataRef = new Firebase('https://fiery-inferno-1382.firebaseio.com');
-angular.module('starter', ['ionic', 'firebase','starter.controllers', 'starter.services', 'ngCordova'])
+angular.module('starter', ['ionic', 'firebase','starter.controllers', 'starter.services', 'ngCordova', 'ionic-toast'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -31,6 +31,12 @@ angular.module('starter', ['ionic', 'firebase','starter.controllers', 'starter.s
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
+
+    .state('root', {
+                url : '/root',
+                templateUrl : 'root.html',
+                controller : 'RootPageController'
+    })
 
   // setup an abstract state for the tabs directive
     .state('tab', {
@@ -75,7 +81,7 @@ angular.module('starter', ['ionic', 'firebase','starter.controllers', 'starter.s
     views: {
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+        controller: 'ControladorLinterna'
       }
     }
   })
@@ -90,17 +96,57 @@ angular.module('starter', ['ionic', 'firebase','starter.controllers', 'starter.s
     }
   })
 
+
+  .state('Menu', {
+     url : '/Menu',
+    templateUrl : 'MenuAbst.html',
+    abstract : true
+    })
+
+
+  .state('Menu.home', {
+      url: '/home',
+      views: {
+          'contenido': {
+              templateUrl: 'MenuHome.html'
+          }
+      }
+  })
+
+
+  .state('Menu.uno', {
+        url: '/uno',
+        views: {
+            'contenido': {
+             templateUrl: 'MenuUno.html'
+              }
+        }
+    })
+
+  .state('Menu.dos', {
+                url: '/dos',
+                views: {
+                  'contenido': {
+                   templateUrl: 'MenuDos.html',
+                   controller: 'ControladorToast'
+                }
+          }
+      })
+
+
+
+
   .state('templateDeviceM',{
     url: '/templateDeviceM',
     templateUrl: 'templates/templateDeviceMotion.html',
     controller: 'ControladorDeviceMotion'
   })
 
-  .state('templateFlash',{
+  /*.state('templateFlash',{
     url: '/templateFlash',
     templateUrl: 'templates/templateFlashlight.html',
     controller: 'ControladorLinterna'
-  })
+  })*/
 
   .state('templateCam',{
     url: '/templateCam',
@@ -121,6 +167,29 @@ angular.module('starter', ['ionic', 'firebase','starter.controllers', 'starter.s
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/root');
 
-});
+})
+
+
+
+.controller('RootPageController', function($scope, $ionicSideMenuDelegate) {
+    })
+
+
+.controller('NavController', function($scope, $ionicSideMenuDelegate) {
+      $scope.toggleLeft = function() {
+        $ionicSideMenuDelegate.toggleLeft();
+      };
+    })
+
+
+.controller('ControladorToast', ['$scope', 'ionicToast', function($scope, ionicToast) {
+
+$scope.mostrarMensaje = function(mensaje,posicion,cierreAutomatico,duracion){
+    
+ // <!-- ionicToast.show(message, position(top, middle, bottom), stick(true or false), time); -->
+  ionicToast.showInfo(mensaje, posicion, cierreAutomatico, duracion);
+  
+ }
+}]);

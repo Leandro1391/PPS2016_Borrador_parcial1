@@ -1,9 +1,19 @@
-<ion-view view-title="Account">
+<ion-view view-title="Flashlight">
+
+	<ion-nav-buttons side="left">
+
+        <button ui-sref="root" class="button button-icon icon ">root</button>
+
+
+      </ion-nav-buttons>
+	
   <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
+
+  <!-- <ion-toggle ng-model="configuracion.estado" ng-change="algo()" toggle-class="toggle-calm">Linterna Off/On</ion-toggle> -->
+
+  <button class="button button-block icon ion-android-bulb button button-energized" ng-click="lightOn()"></button>
+
+  <button class="button button-block icon ion-android-bulb button-dark" ng-click="lightOff()"></button>
+    
   </ion-content>
 </ion-view>
