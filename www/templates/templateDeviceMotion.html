@@ -1,0 +1,32 @@
+<ion-view view-title="DeviceMotion">
+
+
+</ion-nav-buttons>
+       <ion-nav-buttons side="right">
+
+        <button ui-sref="tab.dash" class="button button-icon icon ">Volver</button>
+
+
+      </ion-nav-buttons>
+
+  <ion-content>
+    
+  	<div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Frequency</span>
+                    <input type="text" placeholder="0" ng-model="options.frequency">
+                </label>
+    </div>
+
+          	<button class="button button-full button-positive" ng-click="startWatching()">
+                Comenzar Medición
+            </button>
+            <button class="button button-full button-positive" ng-click="stopWatching()">
+                Detener Medición
+            </button>
+            <h2>X: {{measurements.x}}</h2>
+            <h2>Y: {{measurements.y}}</h2>
+            <h2>Z: {{measurements.z}}</h2>
+
+  </ion-content>
+</ion-view>

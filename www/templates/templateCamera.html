@@ -1,0 +1,160 @@
+<ion-view title="Imagenes-Camara" ng-init="">
+    <ion-nav-buttons side="right">
+       
+    </ion-nav-buttons>
+    	<ion-nav-buttons side="right">
+
+        <button ui-sref="tab.dash" class="button button-icon icon ">Volver</button>
+
+      </ion-nav-buttons>
+    <ion-content overflow-scroll="false">
+	    <form name="FormFoto">
+			<div class="list list-inset">
+			   		  <ion-toggle  ng-model="settings.guardar">
+				        Guardar en la galeria
+				    </ion-toggle>
+				     <ion-toggle    ng-model="settings.editar">
+				        Editar antes de guardar
+				    </ion-toggle>
+				     <div class="item range range-positive">
+					    <i class="icon ion-minus-round" ng-show="settings.calidad >= 5" ng-click="settings.calidad=settings.calidad-5"></i>
+					    <input type="range" titel="calidad de la imagen" ng-model="settings.calidad" min="5" max="60" >
+					    <i class="icon ion-plus-circled"  ng-show="settings.calidad <= 90" ></i>
+	  				</div>
+					
+					  <label class="item item-input item-floating-label">
+					    <span class="input-label">Titulo:</span>
+					    <input type="text" placeholder="Titulo" required="" ng-model="datos.titulo" >
+					 </label>
+					  
+					 <label class="item item-input item-floating-label">
+					    <span class="input-label">Comentario:</span>
+					    <textarea rows="3" maxlength="666" placeholder="Comentario" required="" ng-model="datos.comentario" ></textarea>
+					  
+					 </label>
+					  <label class="item item-input item-select">
+			              <div class="input-label">
+			                Lenguaje:
+			              </div>
+			            <select class="ion-input-select--large" ng-model="datos.lenguaje"  required="">
+			                <option>C#</option>
+			                <option >C</option>
+			                <option>PHP</option>
+			                 <option>VB.Net</option>
+			                <option >SQL</option>
+			                <option>JavaScript</option>
+			                <option>AngularJs</option>
+			              </select>
+			        </label>
+			         <label class="item item-input item-select  ">
+			              <div class="input-label">
+			                Catedra:
+			              </div>
+			            <select class="ion-input-select--large" ng-model="datos.materia"  required="">
+			                <option>Programaci&oacute;n I</option>			             
+			                <option>Programaci&oacute;n II</option>
+			                <option>Programaci&oacute;n III</option>
+			                <option>Programaci&oacute;n avanzada I</option>
+			                <option>Programaci&oacute;n avanzada II</option>
+			                <option >Laboratorio I</option>
+			                <option>Laboratorio II</option>
+			                <option>Laboratorio III</option>
+			                <option>Laboratorio IV</option>
+			                <option>Laboratorio V</option>
+			               	 <option>PPS I</option>
+			               	 <option>PPS II</option>
+			              </select>
+			        </label>
+
+				     <button  ng-disabled="FormFoto.$invalid " class="button button-icon icon ion-camera" ng-click="upload()"></button>
+				     
+					<div class="item item-divider">
+				  		<div class="row">
+									  <div class="col col-50   "><p>Guardar Localmente:</p> {{settings.guardar}}</div>
+									  <div class="col "><p>editar: </p>{{settings.editar}}</div>
+									  <div class="col  "><p>Calidad: </p>{{settings.calidad}}% </div>
+									</div>
+						  </div>
+					</div>
+	     </form>
+     <ion-scroll zooming="true" direction="y" >
+        <div class="list card">
+        	    	<div class="item item-divider">
+        	    		<h5>Filtros:</h5>
+					<div class="row">
+					  <div class="col   button button-outline button-positive">  	
+					  		  Lenguaje:
+					  		<label class="item item-input item-select">
+					              <div class="input-label">
+					              
+					              </div><br>
+					            <select class="ion-input-select--large" ng-click="filtros.estricto=true" ng-model="filtros.lenguaje"  >
+					                <option></option>
+					                  <option>C#</option>
+					                <option >C</option>
+					                <option>PHP</option>
+					                 <option>VB.Net</option>
+					                <option >SQL</option>
+					                <option>JavaScript</option>
+					                <option>AngularJs</option>
+					              </select>
+					        </label>
+		    		</div>
+					  <div class="col button button-outline button-positive">
+					  	  Catedra:
+					  		 <label class="item item-input item-select">
+					              <div class="input-label">
+					              
+					              </div>
+					            <select class="ion-input-select--large" ng-click="filtros.estricto=true" ng-model="filtros.materia" >
+					                <option ></option>					                
+					                <option >Programaci&oacute;n I</option>
+					                <option>Programaci&oacute;n II</option>
+					                <option>Programaci&oacute;n III</option>
+					                <option>Programaci&oacute;n avanzada I</option>
+					                <option>Programaci&oacute;n avanzada II</option>
+					                <option >Laboratorio I</option>
+					                <option>Laboratorio II</option>
+					                <option>Laboratorio III</option>
+					                <option>Laboratorio IV</option>
+					                <option>Laboratorio V</option>
+					               	 <option>PPS I</option>
+					               	 <option>PPS II</option>
+					              </select>
+					        </label>
+
+
+
+
+					  </div>
+					  
+					</div>
+		  			<a class="item item-icon-left" ng-click="filtros.materia='';filtros.lenguaje='';filtros.estricto=false">
+    <i class="icon ion-loop"></i>
+    Mostrar Todos
+    <span class="item-note">
+      Sacar Filtros
+    </span>
+  </a>
+		  		</div>
+
+        		 <center><ion-spinner ng-show="mostrarSpin=='si'" icon="ripple"></ion-spinner></center>
+        		  
+				<div class="item item-avatar" ng-show="mostrarError=='si'">
+			    <center><ion-spinner  class="ion-alert-circled"></ion-spinner></center>
+			  </div>
+			   <div class="item item-avatar"  ng-repeat="image in images|filter:filtros.materia:filtros.estricto |filter:filtros.lenguaje:filtros.estricto | orderBy :fecha : true" >
+			    <img ng-src="data:image/jpeg;base64,{{image.image}}" width="100%" />
+			    <h2>{{image.informacion.titulo}}</h2>
+			    <h3>{{image.informacion.comentario}}</h3>
+			     <h4>{{image.informacion.lenguaje}} {{image.informacion.materia}}</h4>	
+			    <p>{{image.fecha| date:'medium'}}</p>
+			  </div>
+
+	 
+
+		</div>
+	</ion-scroll>
+       
+    </ion-content>
+</ion-view>

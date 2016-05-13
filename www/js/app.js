@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
+var myDataRef = new Firebase('https://fiery-inferno-1382.firebaseio.com');
+angular.module('starter', ['ionic', 'firebase','starter.controllers', 'starter.services', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -87,6 +88,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         
       }
     }
+  })
+
+  .state('templateDeviceM',{
+    url: '/templateDeviceM',
+    templateUrl: 'templates/templateDeviceMotion.html',
+    controller: 'ControladorDeviceMotion'
+  })
+
+  .state('templateFlash',{
+    url: '/templateFlash',
+    templateUrl: 'templates/templateFlashlight.html',
+    controller: 'ControladorLinterna'
+  })
+
+  .state('templateCam',{
+    url: '/templateCam',
+    templateUrl: 'templates/templateCamera.html',
+    controller: 'ControladorCamara'
+  })
+
+  .state('templateVib',{
+    url: '/templateVib',
+    templateUrl: 'templates/templateVibration.html',
+    controller: 'ControladorVibracion'
   })
 
   .state('templateBarcode',{
